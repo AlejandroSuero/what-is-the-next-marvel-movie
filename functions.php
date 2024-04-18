@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 function get_data(string $url): array
 {
   $result = file_get_contents($url);
