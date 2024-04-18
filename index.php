@@ -1,20 +1,17 @@
 <?php
+
+declare(strict_types=1);
+
 const API_URL = "https://whenisthenextmcufilm.com/api";
-# Initialize a new cURL session; ch -> cURL handle
-$ch = curl_init(API_URL);
 
-# Show that we want the request result while not showing it on screen
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+function get_data(string $url): array
+{
+  $result = file_get_contents($url);
+  $data = json_decode($result, true);
+  return $data;
+}
 
-# Execute the request and save the result
-$result = curl_exec($ch);
-$data = json_decode($result, true);
-# Close cURL
-curl_close($ch);
-/*
- * Another way of getting the result of a GET request is:
- * $result = file_get_contents(API_URL);
-*/
+$data = get_data(API_URL);
 
 # Extracting data into variables for next film
 $imgUrl = $data["poster_url"];
