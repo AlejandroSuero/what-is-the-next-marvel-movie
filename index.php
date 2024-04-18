@@ -11,12 +11,23 @@ function get_data(string $url): array
   return $data;
 }
 
+function get_until_message(int $days): string
+{
+  return match (true) {
+    $days === 0 => "TODAY!",
+    $days === 1 => "TOMORROW!",
+    $days <= 7  => "THIS WEEK!",
+    $days < 31  => "THIS MONTH!",
+    default     => "in $days days"
+  };
+}
+
 $data = get_data(API_URL);
 
 # Extracting data into variables for next film
 $imgUrl = $data["poster_url"];
 $movieTitle = $data["title"];
-$daysUntil = $data["days_until"];
+$daysUntil = get_until_message($data["days_until"]);
 $releaseDate = date_format(date_create($data["release_date"]), "Y/m/d");
 $description = $data["overview"];
 $type = $data["type"];
@@ -62,7 +73,7 @@ $imgRealHeight = (int)($imgRealWidth + ($imgRealWidth / 3));
   </header>
   <main>
     <header>
-      <h2 class="title" tabindex="0"><?= $movieTitle; ?> <span>releases in <u><?= $daysUntil; ?> days</u></span></h2>
+      <h2 class="title" tabindex="0"><?= $movieTitle; ?> <span>releases <b><?= $daysUntil; ?></b></span></h2>
     </header>
     <picture>
       <img alt="<?= $type; ?> poster for <?= $movieTitle; ?>" title="Display big <?= strtolower($type); ?> poster for <?= $movieTitle; ?>" id="movie-poster" src="<?= $imgUrl; ?>" width="<?= $imgWidth; ?>" height="<?= $imgHeight; ?>" tabindex="0" />
