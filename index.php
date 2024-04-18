@@ -2,25 +2,9 @@
 
 declare(strict_types=1);
 
+require_once "functions.php";
+
 const API_URL = "https://whenisthenextmcufilm.com/api";
-
-function get_data(string $url): array
-{
-  $result = file_get_contents($url);
-  $data = json_decode($result, true);
-  return $data;
-}
-
-function get_until_message(int $days): string
-{
-  return match (true) {
-    $days === 0 => "TODAY!",
-    $days === 1 => "TOMORROW!",
-    $days <= 7  => "THIS WEEK!",
-    $days < 31  => "THIS MONTH!",
-    default     => "in $days days"
-  };
-}
 
 $data = get_data(API_URL);
 
