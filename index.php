@@ -7,16 +7,8 @@ $data = get_data(API_URL);
 
 # Extracting data into variables for next film
 $imgUrl = $data["poster_url"];
-$movieTitle = $data["title"];
 $daysUntil = get_until_message($data["days_until"]);
 $releaseDate = date_format(date_create($data["release_date"]), "Y/m/d");
-$description = $data["overview"];
-$type = $data["type"];
-
-# Extracting next production data
-$nextProduction = $data["following_production"];
-$nextTitle = $nextProduction["title"];
-$nextType = $nextProduction["type"];
 
 $imgUrlArray = explode("/", $imgUrl);
 $imgWidth = 0;
@@ -33,18 +25,19 @@ foreach ($imgUrlArray as $str) {
 
 $imgHeight = (int)($imgWidth + ($imgWidth / 3));
 $imgRealHeight = (int)($imgRealWidth + ($imgRealWidth / 3));
+$data += ["img_width" => $imgWidth, "img_height" => $imgHeight, "img_real_width" => $imgRealWidth, "img_real_height" => $imgRealHeight, "days_until_message" => $daysUntil];
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<?php require "sections/head.php"; ?>
+<?php render_template("head", $data); ?>
 
 <body>
-  <?php require "sections/main.php"; ?>
-  <?php require "sections/scripts.php"; ?>
+  <?php render_template("main", $data); ?>
+  <?php render_template("scripts", $data); ?>
 </body>
 
-<?php require "sections/styles.php"; ?>
+<?php render_template("styles"); ?>
 
 </html>

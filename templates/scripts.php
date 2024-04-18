@@ -18,9 +18,9 @@
 
     closeButton.innerHTML = '<i class="fa-solid fa-xmark"></i>';
 
-    bigImage.setAttribute("src", "<?= $imgUrl; ?>");
-    bigImage.setAttribute("width", "<?= $imgRealWidth; ?>");
-    bigImage.setAttribute("height", "<?= $imgRealHeight; ?>");
+    bigImage.setAttribute("src", "<?= $poster_url; ?>");
+    bigImage.setAttribute("width", "<?= $img_real_width; ?>");
+    bigImage.setAttribute("height", "<?= $img_real_height; ?>");
     bigImage.setAttribute("id", "big-movie-poster");
 
     overlay.classList.add("overlay");
